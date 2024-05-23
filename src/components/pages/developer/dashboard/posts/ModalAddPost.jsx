@@ -94,7 +94,7 @@ const ModalAddPost = ({ itemEdit }) => {
             <Form action="" className="flex flex-col h-[calc(100vh-110px)]">
               <div className="grow overflow-y-scroll">
 
-                <div className="input-wrap">
+                <div className="input-wrap input-photo">
                   {photo || (itemEdit && itemEdit.posts_photo !== "") ? (
                     <img
                       src={

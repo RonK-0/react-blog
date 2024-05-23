@@ -5,19 +5,20 @@ export const InputText = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <>
-     <label
-        htmlFor={props.id || props.name}
-        className={meta.touched && meta.error ? "error-msg" : ""}
-      >
-        {label}
-      </label>
       <input
         {...field}
         {...props}
         className={meta.touched && meta.error ? "error-msg" : ""}
         autoComplete="off"
       />
-     
+
+      <label
+        htmlFor={props.id || props.name}
+        className={meta.touched && meta.error ? "error-msg" : ""}
+      >
+        {label}
+      </label>
+
       {meta.touched && meta.error ? (
         <small className="error-msg">{meta.error}</small>
       ) : null}
@@ -28,13 +29,6 @@ export const InputTextArea = ({ label, cls, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <>
-     <label
-        htmlFor={props.id || props.name}
-        className={meta.touched && meta.error ? "error-msg" : ""}
-      >
-        {label}
-      </label>
-      
       <textarea
         {...field}
         {...props}
@@ -43,7 +37,14 @@ export const InputTextArea = ({ label, cls, ...props }) => {
         } ${cls}`}
         autoComplete="off"
       />
-     
+
+      <label
+        htmlFor={props.id || props.name}
+        className={meta.touched && meta.error ? "error-msg" : ""}
+      >
+        {label}
+      </label>
+
       {meta.touched && meta.error ? (
         <small className="error-msg">{meta.error}</small>
       ) : null}

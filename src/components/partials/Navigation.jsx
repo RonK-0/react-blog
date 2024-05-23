@@ -1,3 +1,4 @@
+import { FaBloggerB } from "react-icons/fa"; 
 import { RxDashboard } from "react-icons/rx"; 
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -15,12 +16,13 @@ const Navigation = () => {
         </div>
 
         <ul className='nav'>
-            <li className='nav-link active'><Link to={'/portfolio'}><RxDashboard /> Portfolio</Link></li>
-            <li className='nav-link'><Link to={'/users'}><FaUser /> Users</Link></li>
+            <li className='nav-link'><Link to={'/'}><FaBloggerB /> Blog</Link></li>
+            <li className='nav-link active'><Link to={'#'}><RxDashboard /> Posts</Link></li>
+            {/* <li className='nav-link'><Link to={'#'}><FaUser /> Users</Link></li>
             <li className='nav-link'><Link to={'#'}><HiOutlineCalendar /> Calendar</Link></li>
             <li className='nav-link'><Link to={'#'}><HiOutlineDocument /> Database</Link></li>
             <li className='nav-link'><Link to={'#'}><LiaSignalSolid /> Attendance</Link></li>
-            <li className='nav-link'><Link to={'#'}><CiSettings /> Settings</Link></li>
+            <li className='nav-link'><Link to={'#'}><CiSettings /> Settings</Link></li> */}
         </ul>
     </aside>
   )

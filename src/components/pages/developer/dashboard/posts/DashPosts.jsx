@@ -30,7 +30,7 @@ const DashPosts = () => {
   );
 
   return (
-    <section className="flex relative left-[250px]">
+    <section className="flex relative left-[250px] dash-page">
       <Navigation />
       <main className="w-[calc(100%-250px)]">
         <Header />

@@ -182,24 +182,77 @@
 }
 
 @layer components {
-  .input-wrap{
+  /* .input-wrap {
     @apply mb-3 relative;
-    label{
-        @apply mb-1 block text-xs;
+    label {
+      @apply mb-1 block text-xs;
     }
-    input, select, textarea{
-        @apply block w-full p-1 rounded-md
+    input,
+    select,
+    textarea {
+      @apply block w-full p-1 rounded-md
         border-2 text-stone-900
         focus:border-info focus:bg-info/5 focus:text-info;
     }
-    small.error-msg{
-        @apply absolute top-0 right-1 text-alert italic text-xs font-bold;
+    small.error-msg {
+      @apply absolute top-0 right-1 text-alert italic text-xs font-bold;
     }
-}
-.form-action{
-    @apply flex gap-2 justify-end items-center;
-}
+  } */
+  .input-wrap {
+    @apply mb-4 relative;
+    label {
+      @apply mb-1 px-4 block text-base absolute ty-a 
+        text-black/30 font-bold select-none
+        transition-all duration-200 pointer-events-none;
+    }
+    input,
+    select,
+    textarea,
+    .textarea {
+      @apply block w-full pb-2 pt-6 px-4 rounded-[15px]
+        border-2 text-black bg-white
+        focus:border-blue-500 focus:bg-blue-200/10
+        transition-all duration-200 resize-none;
+    }
+    input:focus ~ label,
+    select:focus ~ label,
+    textarea:focus ~ label,
+    .textarea:focus ~ label,
+    input:valid ~ label,
+    select:valid ~ label,
+    textarea:valid ~ label .textarea:valid ~ label,
+    input:not(:empty) ~ label,
+    select:not(:empty) ~ label,
+    textarea:not(:empty) ~ label,
+    .textarea:not(:empty) ~ label {
+      @apply -top-6 translate-y-8 text-xs px-5;
+    }
 
+    input:focus ~ label,
+    select:focus ~ label,
+    textarea:focus ~ label {
+      @apply !text-black;
+    }
+
+    input:not(:empty) ~ label,
+    select:not(:empty) ~ label,
+    textarea:not(:empty) ~ label,
+    .textarea:not(:empty) ~ label {
+      @apply text-black/30;
+    }
+
+    small {
+      @apply absolute top-2 right-4 text-red-500 italic text-xs;
+    }
+    select {
+      option {
+        @apply bg-dark;
+      }
+    }
+  }
+  .form-action {
+    @apply flex gap-2 justify-end items-center;
+  }
 
   nav {
     @apply h-auto max-h-0 transition-all overflow-hidden duration-500;
@@ -274,7 +327,7 @@
   }
 
   /* Modal add new student *Modal */
-  .input-wrap {
+  /* .input-wrap {
     @apply mb-3 relative;
   }
 
@@ -305,7 +358,7 @@
         right-1
         text-red-600
         italic;
-  }
+  } */
 
   /* SOmething loader */
   .loading-bar::after {
@@ -320,6 +373,67 @@
     @apply grid grid-cols-8;
     td {
       @apply line-clamp-5 text-ellipsis;
+    }
+  }
+
+  .dash-page {
+    .input-wrap {
+      @apply overflow-hidden;
+      label {
+        @apply !text-black/80 font-bold;
+      }
+      small {
+        @apply font-bold;
+      }
+      .textarea ~ label {
+        @apply text-xs bg-white rounded-t-[15px]
+          top-0 translate-y-0
+          px-3 mx-2 mt-[2px] pt-2 w-[240px];
+      }
+      .textarea {
+        @apply pt-8;
+      }
+      .textarea:focus ~ label {
+        @apply bg-[#eceff3];
+      }
+    }
+    .input-photo {
+      @apply pt-8 bg-white border border-stone-300 rounded-[15px] f-col-center;
+      #myFile {
+        @apply opacity-0 absolute
+          p-0 m-0 h-full w-full
+          top-0 left-0 cursor-pointer;
+      }
+      .file-upload-label {
+        @apply !top-4 !left-0 px-4 text-sm !text-black;
+      }
+      img {
+        @apply bg-white m-auto
+          max-h-72 h-full w-full
+          object-contain object-center
+          border border-white
+          rounded-[5px];
+      }
+      .upload-box,
+      .upload-box-alt {
+        @apply gap-2 rounded-b-[15px] bg-stone-300
+          transition-all duration-300 w-full;
+      }
+      .upload-box {
+        @apply py-4 f-col-center;
+      }
+      .upload-box-alt {
+        @apply py-2 flex center;
+      }
+      label {
+        @apply !text-white;
+      }
+    }
+    .input-photo:hover {
+      .upload-box,
+      .upload-box-alt {
+        @apply bg-blue-500/80;
+      }
     }
   }
 }
