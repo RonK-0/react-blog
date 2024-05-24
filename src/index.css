@@ -386,9 +386,9 @@
         @apply font-bold;
       }
       .textarea ~ label {
-        @apply text-xs bg-white rounded-t-[15px]
+        @apply text-xs bg-white rounded-tl-[15px]
           top-0 translate-y-0
-          px-3 mx-2 mt-[2px] pt-2 w-[240px];
+          pt-2 pl-[18px] mx-[2px] mt-[2px] w-[calc(100%-10px)];
       }
       .textarea {
         @apply pt-8;

@@ -90,7 +90,7 @@ const PostsTable = ({ isLoading, posts, isFetching, setItemEdit }) => {
             
             {posts?.data.map((item, key) => (
               <tr
-                onDoubleClick={() => handleShowInfo(item)}
+                // onDoubleClick={() => handleShowInfo(item)}
                 key={key}
               >
                 <td>{counter++}</td>

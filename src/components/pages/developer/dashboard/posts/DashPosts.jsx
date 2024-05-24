@@ -87,7 +87,7 @@ const DashPosts = () => {
           {/* <DatabaseInformation /> */}
         </div>
       </main>
-      {store.isAdd && <ModalAddPost itemEdit={itemEdit} />}
+      {store.isAdd && <ModalAddPost itemEdit={itemEdit} position="center" />}
       {/* <ModalAddPortfolio itemEdit={itemEdit}/> */}
       {store.success && <Toast />}
       {store.error && <ModalError position={"center"} />}

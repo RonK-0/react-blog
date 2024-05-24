@@ -82,7 +82,7 @@ Class Posts {
         return $query;
     }
 
-    public function readbyId()
+    public function readById()
     {
         try {
             $sql = "select * ";
