@@ -1,123 +1,97 @@
 import React from "react";
-import { PiArchive } from "react-icons/pi";
-import { LiaEdit, LiaHistorySolid, LiaTrashAltSolid } from "react-icons/lia";
 import TableLoader from "../../../../partials/TableLoader";
-import { StoreContext } from "../../../../../store/StoreContext";
 import NoData from "../../../../partials/NoData";
+import { LiaEdit, LiaHistorySolid, LiaTrashAltSolid } from "react-icons/lia";
+import { PiArchive } from "react-icons/pi";
 import SpinnerFetching from "../../../../partials/spinners/SpinnerFetching";
+import ModalConfirm from "../../../../partials/modals/ModalConfirm";
+import ModalDelete from "../../../../partials/modals/ModalDelete";
+import { StoreContext } from "../../../../../store/StoreContext";
 import {
-  setInfo,
   setIsActive,
   setIsAdd,
   setIsArchive,
   setIsDelete,
-  setIsEdit,
-  setIsShow,
 } from "../../../../../store/StoreAction";
-import ModalConfirm from "../../../../partials/modals/ModalConfirm";
-import ModalDelete from "../../../../partials/modals/ModalDelete";
 
-const PostsTable = ({ isLoading, posts, isFetching, setItemEdit }) => {
-  const { dispatch, store } = React.useContext(StoreContext);
-  let counter = 1;
+const CategoryTable = ({ isLoading, isFetching, category, setItemEdit }) => {
+  const { store, dispatch } = React.useContext(StoreContext);
   const [id, setId] = React.useState("");
 
-  const handleShowInfo = (item) => {
-    dispatch(setIsShow(true));
-    dispatch(setInfo(item));
-  };
-
-  const handleEdit = (item) => {
-    setItemEdit(item);
-    dispatch(setIsAdd(true));
-    dispatch(setIsEdit(true));
-  };
+  let counter = 1;
 
   const handleArchive = (item) => {
     dispatch(setIsActive(true));
-    setId(item.posts_aid);
+    setId(item.category_aid);
     dispatch(setIsArchive(0));
   };
-
   const handleRestore = (item) => {
     dispatch(setIsActive(true));
-    setId(item.posts_aid);
+    setId(item.category_aid);
     dispatch(setIsArchive(1));
   };
 
   const handleDelete = (item) => {
     dispatch(setIsDelete(true));
-    setId(item.posts_aid);
+    setId(item.category_aid);
+  };
+
+  const handleHandle = (item) => {
+    dispatch(setIsAdd(true));
+    setItemEdit(item);
   };
 
   return (
     <>
-      <div
-        className={`table-wrapper overflow-x-scroll lg:overflow-x-auto h-full pb-64 fixed top-56 left-[270px] ${
-          store.isShow ? "w-[calc(100%-690px)]" : "w-[calc(100%-270px)]"
-        } `}
-      >
+      <div className="table-wrapper relative">
         {isFetching && <SpinnerFetching />}
-        <table className="dash_posts">
+        <table>
           <thead>
             <tr>
-              <th className="">#</th>
-              <th className="">Title</th>
-              <th className="">Author</th>
-              <th className="">Category</th>
-              <th className="">Article</th>
-              <th className="">Publish Date</th>
-              <th className="">Visible?</th>
-              <th className="">Action</th>
+              <th className="w-[10px]">#</th>
+              <th className="w-[90%]">Category</th>
+              <th className="w-[100px]">Action</th>
             </tr>
           </thead>
           <tbody>
             {isLoading && (
               <tr>
-                <td colSpan={8}>
+                <td colSpan={9}>
                   <TableLoader count="20" cols="4" />
                 </td>
               </tr>
             )}
 
-            {posts?.data.length === 0 && (
+            {category?.data.length === 0 && (
               <tr>
-                <td colSpan={8}>
+                <td colSpan={9}>
                   <NoData />
                 </td>
               </tr>
             )}
-            
-            {posts?.data.map((item, key) => (
-              <tr
-                // onDoubleClick={() => handleShowInfo(item)}
-                key={key}
-              >
+
+            {category?.data.map((item, key) => (
+              <tr key={key}>
                 <td>{counter++}</td>
-                <td>{item.posts_title}</td>
-                <td>{item.posts_author}</td>
                 <td>{item.category_title}</td>
-                <td>{item.posts_article}</td>
-                <td>{item.posts_publish_date}</td>
-                <td>{item.posts_is_active === 1 ? "Yes" : "No"}</td>
                 <td className="table-action">
                   <ul>
-                    {item.posts_is_active ? (
+                    {item.category_is_active ? (
                       <>
                         <li>
                           <button
+                            onClick={() => handleHandle(item)}
                             className="tooltip"
                             data-tooltip="Edit"
-                            onClick={() => handleEdit(item)}
                           >
                             <LiaEdit />
                           </button>
                         </li>
                         <li>
                           <button
+                            onClick={() => handleArchive(item)}
                             className="tooltip"
                             data-tooltip="Archive"
-                            onClick={() => handleArchive(item)}
                           >
                             <PiArchive />
                           </button>
@@ -127,18 +101,18 @@ const PostsTable = ({ isLoading, posts, isFetching, setItemEdit }) => {
                       <>
                         <li>
                           <button
+                            onClick={() => handleRestore(item)}
                             className="tooltip"
                             data-tooltip="Restore"
-                            onClick={() => handleRestore(item)}
                           >
                             <LiaHistorySolid />
                           </button>
                         </li>
                         <li>
                           <button
+                            onClick={() => handleDelete(item)}
                             className="tooltip"
                             data-tooltip="Delete"
-                            onClick={() => handleDelete(item)}
                           >
                             <LiaTrashAltSolid />
                           </button>
@@ -152,22 +126,23 @@ const PostsTable = ({ isLoading, posts, isFetching, setItemEdit }) => {
           </tbody>
         </table>
       </div>
+
       {store.isActive && (
-          <ModalConfirm
-            position={"center"}
-            queryKey={"posts"}
-            endpoint={`/v1/posts/active/${id}`}
-          />
-        )}
-        {store.isDelete && (
-          <ModalDelete
-            position={"center"}
-            queryKey={"posts"}
-            endpoint={`/v1/posts/${id}`}
-          />
-        )}
+        <ModalConfirm
+          position="center"
+          queryKey="category"
+          endpoint={`/v1/category/active/${id}`}
+        />
+      )}
+      {store.isDelete && (
+        <ModalDelete
+          position="center"
+          endpoint={`/v1/category/${id}`}
+          queryKey="category"
+        />
+      )}
     </>
   );
 };
 
-export default PostsTable;
+export default CategoryTable;

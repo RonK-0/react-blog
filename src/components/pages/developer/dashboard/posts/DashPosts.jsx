@@ -31,7 +31,7 @@ const DashPosts = () => {
 
   return (
     <section className="flex relative left-[250px] dash-page">
-      <Navigation />
+      <Navigation menu={"posts"} />
       <main className="w-[calc(100%-250px)]">
         <Header />
         <div className="flex relative">

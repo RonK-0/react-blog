@@ -3,7 +3,7 @@
 Class Posts {
     public $posts_aid;
     public $posts_title;
-    public $posts_category;
+    public $posts_category_id;
     public $posts_photo;
     public $posts_author;
     public $posts_created;
@@ -21,13 +21,14 @@ Class Posts {
     public function __construct($db){
         $this->connection = $db;
         $this->tblPosts = "posts";
+        $this->tblCategory = "category";
     }
 
     public function create() {
         try{
             $sql = "insert into {$this->tblPosts} (";
             $sql .= "posts_title, ";
-            $sql .= "posts_category, ";
+            $sql .= "posts_category_id, ";
             $sql .= "posts_photo, ";
             $sql .= "posts_author, ";
             $sql .= "posts_article, ";
@@ -37,7 +38,7 @@ Class Posts {
             $sql .= "posts_datetime ";
             $sql .= " ) values ( ";
             $sql .= ":posts_title, ";
-            $sql .= ":posts_category, ";
+            $sql .= ":posts_category_id, ";
             $sql .= ":posts_photo, ";
             $sql .= ":posts_author, ";
             $sql .= ":posts_article, ";
@@ -52,7 +53,7 @@ Class Posts {
                 "posts_title" => $this->posts_title,
                 "posts_photo" => $this->posts_photo,
                 "posts_author" => $this->posts_author,
-                "posts_category" => $this->posts_category,
+                "posts_category_id" => $this->posts_category_id,
                 "posts_article" => $this->posts_article,
                 "posts_publish_date" => $this->posts_publish_date,
                 "posts_is_active" => $this->posts_is_active,
@@ -72,8 +73,10 @@ Class Posts {
     {
         try {
             $sql = "select * ";
-            $sql .= "from {$this->tblPosts} ";
-            $sql .= "order by posts_is_active desc ";
+            $sql .= "from {$this->tblPosts} as post, ";
+            $sql .= "{$this->tblCategory} as category ";
+            $sql .= "where post.posts_category_id = category.category_aid ";
+            $sql .= "order by post.posts_is_active desc ";
             // $sql .= "order by posts_aid asc ";
             $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
@@ -121,7 +124,7 @@ Class Posts {
             $sql .= "posts_title = :posts_title, ";
             $sql .= "posts_photo = :posts_photo, ";
             $sql .= "posts_author = :posts_author, ";
-            $sql .= "posts_category = :posts_category, ";
+            $sql .= "posts_category_id = :posts_category_id, ";
             $sql .= "posts_article = :posts_article, ";
             $sql .= "posts_publish_date = :posts_publish_date, ";
             $sql .= "posts_datetime = :posts_datetime ";
@@ -131,7 +134,7 @@ Class Posts {
                 "posts_title" => $this->posts_title,
                 "posts_photo" => $this->posts_photo,
                 "posts_author" => $this->posts_author,
-                "posts_category" => $this->posts_category,
+                "posts_category_id" => $this->posts_category_id,
                 "posts_article" => $this->posts_article,
                 "posts_publish_date" => $this->posts_publish_date,
                 "posts_datetime" => $this->posts_datetime,

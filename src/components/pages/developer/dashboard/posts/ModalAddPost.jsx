@@ -3,12 +3,13 @@ import React from "react";
 import { LiaTimesSolid } from "react-icons/lia";
 import ModalWrapper from "../../../../partials/modals/ModalWrapper";
 import SpinnerButton from "../../../../partials/spinners/SpinnerButton";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryData } from "../../../../helpers/queryData";
 import {
   InputText,
   InputTextArea,
   InputFileUpload,
+  InputSelect,
 } from "../../../../helpers/FormInputs";
 import { Form, Formik } from "formik";
 import { object, string } from "yup";
@@ -21,6 +22,7 @@ import {
 } from "../../../../../store/StoreAction";
 import useUploadPhoto from "../../../../custom-hook/useUploadPhoto";
 import { devBaseImgUrl } from "../../../../helpers/functions-general";
+import useQueryData from "../../../../custom-hook/useQueryData";
 
 const ModalAddPost = ({ itemEdit, position }) => {
   const { dispatch, store } = React.useContext(StoreContext);
@@ -30,6 +32,17 @@ const ModalAddPost = ({ itemEdit, position }) => {
   const { uploadPhoto, handleChangePhoto, photo } = useUploadPhoto(
     `/v1/upload/photo`,
     dispatch
+  );
+
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: category,
+  } = useQueryData(
+    `/v1/category`, // endpoint
+    "get", // method
+    "category" // key
   );
 
   const mutation = useMutation({
@@ -56,7 +69,7 @@ const ModalAddPost = ({ itemEdit, position }) => {
 
   const initVal = {
     posts_title: itemEdit ? itemEdit.posts_title : "",
-    posts_category: itemEdit ? itemEdit.posts_category : "",
+    posts_category_id: itemEdit ? itemEdit.posts_category_id : "",
     posts_author: itemEdit ? itemEdit.posts_author : "",
     posts_photo: itemEdit ? itemEdit.posts_photo : "",
     posts_article: itemEdit ? itemEdit.posts_article : "",
@@ -64,7 +77,7 @@ const ModalAddPost = ({ itemEdit, position }) => {
   };
   const yupSchema = object({
     posts_title: string().required("Title Required*"),
-    posts_category: string().required("Category Required*"),
+    posts_category_id: string().required("Category Required*"),
     posts_author: string().required("Author Required*"),
     // posts_photo: string().required("Image Required*"),
     posts_article: string().required("Article Required*"),
@@ -149,18 +162,34 @@ const ModalAddPost = ({ itemEdit, position }) => {
                   <div className="input-wrap">
                     <InputText label="Author" type="text" name="posts_author" />
                   </div>
-                  <div className="input-wrap">
+                  {/* <div className="input-wrap">
                     <InputText
                       label="Category"
                       type="text"
-                      name="posts_category"
+                      name="posts_category_id"
                     />
+                  </div> */}
+                  <div className="input-wrap">
+                    <InputSelect
+                      label="Category"
+                      type="text"
+                      name="posts_category_id"
+                    >
+                      {category?.data.map((item, key) => (
+                        <React.Fragment key={key}>
+                          <option hidden>Select</option>
+                          <option value={item.category_aid}>
+                            {item.category_title}
+                          </option>
+                        </React.Fragment>
+                      ))}
+                    </InputSelect>
                   </div>
 
                   <div className="input-wrap">
                     <InputText
                       label="Publishing Date"
-                      type="text"
+                      type="date"
                       name="posts_publish_date"
                     />
                   </div>

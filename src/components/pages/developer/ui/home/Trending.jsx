@@ -6,6 +6,15 @@ import { Link } from "react-router-dom";
 import {devBaseImgUrl} from "../../../../helpers/functions-general"
 
 const Trending = ({ isLoading, posts }) => {
+
+  // posts?.data.some((item) => ( item.posts_category_id === 4 && 
+  //   console.log(item)
+  // ))
+
+  const getTrending = ()=> posts?.data.filter(item => item.posts_category_id === 4);
+
+  // console.log(getTrending())
+
   return (
     <>
       <section className="trending pt-10 pb-10">
@@ -16,7 +25,7 @@ const Trending = ({ isLoading, posts }) => {
 
             <div className="grid md:grid-cols-2 gap-10">
               {!isLoading &&
-                posts?.data.slice(0, 4).map((item, key) => (
+                getTrending().slice(0, 4).map((item, key) => (
                   // <Card_sm item={item} key={key} />
 
                   <div
@@ -36,7 +45,7 @@ const Trending = ({ isLoading, posts }) => {
                     </div>
 
                     <small className="hover:bg-accent bg-stone-600 tracking-wider px-3 py-1 rounded-2xl text-white font-bold text-xs">
-                      {item.posts_category}
+                      {item.category_title}
                     </small>
                     <Link to={`/single?id=${item.posts_aid}`}>
                       <h3 className="my-4">

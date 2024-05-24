@@ -60,7 +60,7 @@ const Single = () => {
               <img src={devBaseImgUrl + "/" + post?.data[0].posts_photo} alt="" />
 
               <small className="hover:bg-accent bg-stone-600 tracking-wider px-3 py-1 rounded-2xl text-white font-bold text-xs inline-block mb-3">
-              {post?.data[0].posts_category}
+              {post?.data[0].category_title}
               </small>
 
               <h2>{post?.data[0].posts_title}</h2>

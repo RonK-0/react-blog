@@ -26,6 +26,11 @@ RewriteRule ^posts/search$ controllers/posts/search.php [L]
 
 RewriteRule ^upload.photo$ core/upload-photo.php [L]
 
+RewriteRule ^category$ controllers/category/category.php [L]
+RewriteRule ^category/([0-9]+)$ controllers/category/category.php?categoryid=$1 [L]
+RewriteRule ^category/active/([0-9]+)$ controllers/category/active.php?categoryid=$1 [L]
+RewriteRule ^category/search$ controllers/category/search.php [L]
+
 # RewriteRule ^teacher$ controllers/teacher/teacher.php [L]
 # RewriteRule ^teacher/([0-9]+)$ controllers/teacher/teacher.php?teacherid=$1 [L]
 # RewriteRule ^teacher/active/([0-9]+)$ controllers/teacher/active.php?teacherid=$1 [L]
